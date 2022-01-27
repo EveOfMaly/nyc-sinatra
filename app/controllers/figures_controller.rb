@@ -10,7 +10,7 @@ end
 #index for figures
 get '/figures/:id' do 
 
-  @figure = Figure.find_by(id: params[:id])
+  @figure = Figure.find_by_id(params[:id])
   erb :'figures/show'
 end
 
@@ -42,27 +42,24 @@ end
 
 #edit
 get '/figures/:id/edit' do 
-  @figure = Figure.find_by(params[:id])
-  @landmarks = Landmark.all
-  @titles = Title.all
+
+  @figure = Figure.find_by_id(params[:id])
   
   erb :'figures/edit'
 end
 
-patch '/figures/:id' do 
+#update
+  patch '/figures/:id' do 
   
-  binding.pry
-  @figure = Figure.find_by(params[:id])
-
+  @figure = Figure.find_by_id(params[:id])
+  @figure.update(name: params[:figure][:name], title_ids: params[:figure][:title_ids], landmark_ids: params[:figure][:landmark_ids])
+  
   #create a new title if field is filled in
   @figure.titles << Title.create(params[:new_title]) if !params[:new_title][:name].empty? 
   #create a new landmark if field is filled in
   @figure.landmarks << Landmark.create(params[:landmark]) if !params[:landmark][:name].empty? 
 
   @figure.save
-
-
-
   erb :'figures/show'
 end
 
