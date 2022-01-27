@@ -10,6 +10,7 @@ end
 #index for figures
 get '/figures/:id' do 
 
+ 
   @figure = Figure.find_by_id(params[:id])
   erb :'figures/show'
 end
@@ -44,7 +45,8 @@ end
 get '/figures/:id/edit' do 
 
   @figure = Figure.find_by_id(params[:id])
-  
+  @titles = Title.all
+  @landmarks = Landmark.all
   erb :'figures/edit'
 end
 
@@ -60,6 +62,7 @@ end
   @figure.landmarks << Landmark.create(params[:landmark]) if !params[:landmark][:name].empty? 
 
   @figure.save
+
   erb :'figures/show'
 end
 
@@ -67,7 +70,8 @@ end
 #delete
 
 delete '/figures' do 
-
+  Figure.all.clear
+  redirect to '/figures'
 end
 
 
