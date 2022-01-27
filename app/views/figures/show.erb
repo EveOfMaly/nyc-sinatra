@@ -1,0 +1,28 @@
+<h1> Showing Figure Profile </h1>
+<h2>Name: <%= @figure.name %> </h2><br>
+<b><p> Here are a list of titles</p></b>
+<p> 
+        <% @figure.titles.each do |title| %>
+        <ul>
+           <li> <%= title.name %> </li>
+        </ul>
+        <% end %>
+</p>
+
+<br>
+<b><p> Here are a list of landmarks associate with <%= @figure.name %> </p></b>
+<p> <% @figure.landmarks.each do |landmark| %>
+    <ul>
+        <li><%= landmark.name %><br></li>
+        <ul>
+        <li>Year Completed: <%= landmark.year_completed %></li>
+        </ul>
+    </ul>
+    <% end %>
+</p>
+<br>
+
+<a class="button" href="/figures">Landmarks</a>
+<a class="button" href="/">Home</a>
+
+
